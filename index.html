@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QUEEN AGENCY - Royal & Digital Store</title>
+  <style>
+    :root {
+      --queen-gold: #ffe259;
+      --queen-bronze: #ffa751;
+      --royal-purple: #1a0f30;
+      --dark-bg: #0d081b;
+      --card-bg: rgba(30, 19, 54, 0.6);
+      --text: #ffffff;
+      --text-muted: #bdaed6;
+      --success: #00e676;
+      --whatsapp: #25d366;
+      --gold-gradient: linear-gradient(135deg, #ffe259 0%, #ffa751 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Playfair Display', 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text);
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 20% 30%, rgba(255, 226, 89, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(147, 51, 234, 0.08) 0%, transparent 50%);
+    }
+
+    /* --- ADVANCED ANIMATIONS --- */
+    @keyframes cardEntrance {
+      0% { opacity: 0; transform: scale(0.95) translateY(30px); filter: blur(5px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+
+    @keyframes inputFade {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes dashboardEntrance {
+      0% { opacity: 0; transform: translateY(40px); filter: blur(6px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    @keyframes fadeOutPage {
+      0% { opacity: 1; transform: scale(1); filter: blur(0); }
+      100% { opacity: 0; transform: scale(1.03); filter: blur(8px); }
+    }
+
+    /* --- LOGIN AREA --- */
+    .page-login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .page-login.exit-animation {
+      animation: fadeOutPage 0.5s ease-in-out forwards;
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 50px 40px;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      border: 1px solid rgba(255, 226, 89, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 226, 89, 0.05);
+      animation: cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .queen-crown-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .login-card h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-card p {
+      color: var(--text-muted);
+      margin-bottom: 35px;
+      font-size: 0.95rem;
+    }
+
+    .input-group {
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: inputFade 0.5s ease-out forwards;
+    }
+
+    .input-group:nth-child(3) { animation-delay: 0.2s; }
+    .input-group:nth-child(4) { animation-delay: 0.4s; }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(13, 8, 27, 0.6);
+      border: 1px solid rgba(255, 226, 89, 0.2);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--queen-gold);
+      background: rgba(13, 8, 27, 0.8);
+      box-shadow: 0 0 15px rgba(255, 226, 89, 0.2);
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold-gradient);
+      border: none;
+      border-radius: 12px;
+      color: #0d081b;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      opacity: 0;
+      animation: inputFade 0.5s ease-out forwards;
+      animation-delay: 0.5s;
+      box-shadow: 0 4px 15px rgba(255, 167, 81, 0.3);
+    }
+
+    .login-btn:hover {
+      box-shadow: 0 0 25px rgba(255, 226, 89, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* --- DASHBOARD AREA --- */
+    .page-dashboard {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+    }
+
+    .dashboard-active {
+      display: block;
+      animation: dashboardEntrance 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 226, 89, 0.15);
+      padding-bottom: 25px;
+    }
+
+    .dash-header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dash-header h1 span {
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+      font-weight: 300;
+    }
+
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 226, 89, 0.1);
+      padding: 18px;
+      border-radius: 14px;
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--gold-gradient);
+      border-color: transparent;
+      color: #0d081b;
+      font-weight: 700;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 167, 81, 0.25);
+    }
+
+    .content-panel {
+      display: none;
+    }
+
+    .content-panel.active-panel {
+      display: block;
+      animation: cardEntrance 0.6s ease-in-out forwards;
+    }
+
+    .panel-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border-left: 4px solid var(--queen-gold);
+      padding-left: 15px;
+    }
+
+    /* FILTERS */
+    .smm-filter-container {
+      background: rgba(255, 226, 89, 0.03);
+      padding: 25px;
+      border-radius: 16px;
+      margin-bottom: 35px;
+      border: 1px solid rgba(255, 226, 89, 0.1);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .app-dropdown {
+      background: #1e1336;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 226, 89, 0.25);
+      font-size: 1rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .app-buttons-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .app-chip-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 25px;
+      color: white;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .app-chip-btn:hover, .app-chip-btn.chip-active {
+      background: var(--gold-gradient);
+      color: #0d081b;
+      font-weight: 700;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(255, 226, 89, 0.2);
+    }
+
+    /* CARDS & PRICING */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 25px;
+    }
+
+    .item-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 226, 89, 0.1);
+      border-radius: 18px;
+      padding: 30px;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+    }
+
+    .item-card:hover {
+      border-color: var(--queen-gold);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 226, 89, 0.1);
+    }
+
+    .item-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 226, 89, 0.15);
+      color: var(--queen-gold);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 226, 89, 0.2);
+    }
+
+    .item-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .calc-box {
+      margin-bottom: 18px;
+    }
+
+    .calc-box label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .calc-input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(13, 8, 27, 0.5);
+      border: 1px solid rgba(255, 226, 89, 0.15);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .bonus-box {
+      background: rgba(0, 230, 118, 0.08);
+      border: 1px dashed var(--success);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+      color: var(--success);
+      line-height: 1.4;
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .price-tag span.calculated-amt {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .rate-info {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .order-btn {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid var(--queen-gold);
+      color: var(--queen-gold);
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    .order-btn:hover {
+      background: var(--gold-gradient);
+      color: #0d081b;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(255, 226, 89, 0.3);
+    }
+
+    /* INFO PANEL VIEW */
+    .payment-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .payment-card {
+      background: linear-gradient(135deg, #1e1336 0%, #0d081b 100%);
+      border: 2px solid var(--queen-gold); 
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .jc-badge {
+      background: var(--gold-gradient);
+      color: #0d081b;
+      padding: 8px 20px;
+      font-weight: 700;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .payment-details-box {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 226, 89, 0.1);
+    }
+
+    .p-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .p-row:last-child {
+      border-bottom: none;
+    }
+
+    .p-value.highlight {
+      color: var(--queen-gold);
+      font-weight: bold;
+    }
+
+    .whatsapp-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--whatsapp);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      background: #1ebd59;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    }
+
+    .logout-btn {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #ff2c3d;
+      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-login" id="loginPage">
+    <div class="login-card">
+      <div class="queen-crown-icon">👑</div>
+      <h2>QUEEN AGENCY</h2>
+      <p>Enter any random email & password to enter the royal store</p>
+      <div class="input-group">
+        <input type="email" id="username" placeholder="Email Address" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button class="login-btn" onclick="handleLogin()">Login to Dashboard</button>
+    </div>
+  </div>
+
+
+  <div class="page-dashboard" id="dashboardPage">
+    
+    <div class="dash-header">
+      <h1>👑 QUEEN <span>AGENCY</span></h1>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
+
+    <div class="nav-tabs">
+      <div class="tab-btn active" onclick="switchTab(event, 'smm-services')">🚀 All Services</div>
+      <div class="tab-btn" onclick="switchTab(event, 'accounts')">🌍 UK & Global ACCOUNTS</div>
+      <div class="tab-btn" onclick="switchTab(event, 'payment-panel')" style="border-color: var(--queen-gold);">💳 Get Payment Method</div>
+    </div>
+
+
+    <div id="smm-services" class="content-panel active-panel">
+      <div class="panel-title">⚡ SMM Instant Services (Followers, Likes, Views, Subs)</div>
+      
+      <div class="smm-filter-container">
+        <div class="filter-row">
+          <label>Choose Option:</label>
+          <select id="appSelect" class="app-dropdown" onchange="filterSmmPanel('dropdown')">
+            <option value="all">🌐 All Platforms (Everything)</option>
+            <option value="instagram">📸 Instagram</option>
+            <option value="tiktok">🎵 TikTok</option>
+            <option value="facebook">📘 Facebook</option>
+            <option value="youtube">📺 YouTube</option>
+          </select>
+        </div>
+        
+        <div class="app-buttons-group">
+          <button class="app-chip-btn chip-active" onclick="filterSmmPanel('button', 'all', this)">All Apps</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'instagram', this)">Instagram</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'tiktok', this)">TikTok</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'facebook', this)">Facebook</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'youtube', this)">YouTube</button>
+        </div>
+      </div>
+
+      <div class="services-grid" id="smmGrid">
+        
+        <div class="item-card" data-app="tiktok">
+          <span class="item-badge">TikTok</span>
+          <h4>TikTok Premium Followers</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 👥 Followers</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="tiktok_followers_qty" value="1000" min="100" oninput="calculatePrice('tiktok_followers', 1200, 1000)">
+          </div>
+          <div class="price-tag">Rs. <span id="tiktok_followers_price" class="calculated-amt">1,200</span> <span class="rate-info">(Rate: Rs. 1200 per 1k)</span></div>
+          <button class="order-btn" onclick="processOrder('TikTok Premium Followers', 'tiktok_followers_qty', 'tiktok_followers_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="tiktok">
+          <span class="item-badge">TikTok</span>
+          <h4>TikTok Video Likes</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: ❤️ Likes</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="tiktok_likes_qty" value="10000" min="500" oninput="calculatePrice('tiktok_likes', 750, 10000)">
+          </div>
+          <div class="price-tag">Rs. <span id="tiktok_likes_price" class="calculated-amt">750</span> <span class="rate-info">(Rate: Rs. 750 per 10k)</span></div>
+          <button class="order-btn" onclick="processOrder('TikTok Video Likes', 'tiktok_likes_qty', 'tiktok_likes_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="tiktok">
+          <span class="item-badge">TikTok</span>
+          <h4>TikTok Video Views</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 👁️ Views</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="tiktok_views_qty" value="10000" min="500" oninput="calculatePrice('tiktok_views', 650, 10000)">
+          </div>
+          <div class="price-tag">Rs. <span id="tiktok_views_price" class="calculated-amt">650</span> <span class="rate-info">(Rate: Rs. 650 per 10k)</span></div>
+          <button class="order-btn" onclick="processOrder('TikTok Video Views', 'tiktok_views_qty', 'tiktok_views_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="instagram">
+          <span class="item-badge">Instagram</span>
+          <h4>Instagram Real Followers</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 👥 Followers</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="ig_followers_qty" value="1000" min="100" oninput="calculatePrice('ig_followers', 900, 1000)">
+          </div>
+          <div class="price-tag">Rs. <span id="ig_followers_price" class="calculated-amt">900</span> <span class="rate-info">(Rate: Rs. 900 per 1k)</span></div>
+          <button class="order-btn" onclick="processOrder('Instagram Real Followers', 'ig_followers_qty', 'ig_followers_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="instagram">
+          <span class="item-badge">Instagram</span>
+          <h4>Instagram Post Likes</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: ❤️ Likes</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="ig_likes_qty" value="10000" min="500" oninput="calculatePrice('ig_likes', 650, 10000)">
+          </div>
+          <div class="price-tag">Rs. <span id="ig_likes_price" class="calculated-amt">650</span> <span class="rate-info">(Rate: Rs. 650 per 10k)</span></div>
+          <button class="order-btn" onclick="processOrder('Instagram Post Likes', 'ig_likes_qty', 'ig_likes_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="youtube">
+          <span class="item-badge">YouTube</span>
+          <h4>YouTube Subscribers</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 🔔 Subscribers</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="yt_subs_qty" value="1000" min="100" oninput="calculatePrice('yt_subs', 8000, 1000)">
+          </div>
+          <div class="price-tag">Rs. <span id="yt_subs_price" class="calculated-amt">8,000</span> <span class="rate-info">(Rate: Rs. 8000 per 1k)</span></div>
+          <button class="order-btn" onclick="processOrder('YouTube Subscribers', 'yt_subs_qty', 'yt_subs_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="facebook">
+          <span class="item-badge">Facebook</span>
+          <h4>Facebook Followers</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 👥 Followers</p>
+          <div class="calc-box">
+            <label>Enter Quantity:</label>
+            <input type="number" class="calc-input" id="fb_followers_qty" value="1000" min="100" oninput="calculatePrice('fb_followers', 900, 1000)">
+          </div>
+          <div class="price-tag">Rs. <span id="fb_followers_price" class="calculated-amt">900</span> <span class="rate-info">(Rate: Rs. 900 per 1k)</span></div>
+          <button class="order-btn" onclick="processOrder('Facebook Followers', 'fb_followers_qty', 'fb_followers_price', true)">Order Via WhatsApp</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="accounts" class="content-panel">
+      <div class="panel-title">🌍 UK & Global Accounts Store</div>
+      <div class="services-grid">
+        
+        <div class="item-card">
+          <span class="item-badge">UK Region</span>
+          <h4>YOUTUBE UK ACCOUNT</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">Fresh UK verified YouTube account, fully optimized and ready to use.</p>
+          <div class="bonus-box">
+            🎁 <strong>FREE BONUSES:</strong> • Free Viral Hashtags Guide & Uploading Chart
+          </div>
+          <div class="price-tag">Rs. <span class="calculated-amt">1,500</span></div>
+          <button class="order-btn" onclick="processOrder('YOUTUBE UK ACCOUNT (with Free Bonuses)', null, '1500', false)">Buy Now</button>
+        </div>
+
+        <div class="item-card">
+          <span class="item-badge">USA Region</span>
+          <h4>YOUTUBE USA ACCOUNT</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">Premium USA verified YouTube account, perfect for global monetization reach.</p>
+          <div class="bonus-box">
+            🎁 <strong>FREE BONUSES:</strong> • Free Viral Hashtags Guide & Uploading Chart
+          </div>
+          <div class="price-tag">Rs. <span class="calculated-amt">1,500</span></div>
+          <button class="order-btn" onclick="processOrder('YOUTUBE USA ACCOUNT (with Free Bonuses)', null, '1500', false)">Buy Now</button>
+        </div>
+
+        <div class="item-card">
+          <span class="item-badge" style="background: rgba(255, 226, 89, 0.15); color: var(--queen-gold);">UK Region</span>
+          <h4>TIKTOK UK ACCOUNT</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">Fresh UK verified TikTok account with Creativity Program enabled.</p>
+          <div class="bonus-box">
+            🎁 <strong>FREE BONUSES:</strong> • Free Viral Hashtags Guide & Uploading Chart
+          </div>
+          <div class="price-tag">Rs. <span class="calculated-amt">900</span></div>
+          <button class="order-btn" onclick="processOrder('TIKTOK UK ACCOUNT (with Free Bonuses)', null, '900', false)">Buy Now</button>
+        </div>
+
+        <div class="item-card">
+          <span class="item-badge" style="background: rgba(255, 226, 89, 0.15); color: var(--queen-gold);">Global Region</span>
+          <h4>TIKTOK GLOBAL ACCOUNT</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">Ready to spend agency global ad account for standard marketing/ads.</p>
+          <div class="bonus-box">
+            🎁 <strong>FREE BONUSES:</strong> • Free Viral Hashtags Guide & Uploading Chart
+          </div>
+          <div class="price-tag">Rs. <span class="calculated-amt">800</span></div>
+          <button class="order-btn" onclick="processOrder('TIKTOK GLOBAL ACCOUNT (with Free Bonuses)', null, '800', false)">Buy Now</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="payment-panel" class="content-panel">
+      <div class="panel-title">💳 Official Payment Gateway</div>
+      <div class="payment-container">
+        <div class="payment-card">
+          <span class="jc-badge">JazzCash Business Method</span>
+          <h3 style="font-size: 1.6rem; letter-spacing: 1px;">QUEEN AGENCY</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 12px; line-height: 1.5;">
+            Humaray paas currently **JazzCash Business QR Code** supported hai. Payment QR code live chat par haasil karne ke liye neechay diye gaye WhatsApp button par click karein.
+          </p>
+          
+          <div class="payment-details-box">
+            <div class="p-row"><span class="p-label" style="color: var(--text-muted);">Account Title:</span><span class="p-value" style="color: #fff; font-weight: 600;">QUEEN AGENCY</span></div>
+            <div class="p-row"><span class="p-label" style="color: var(--text-muted);">QR Status:</span><span class="p-value" style="color: var(--success); font-weight: bold;">Ask on WhatsApp</span></div>
+          </div>
+
+          <button class="whatsapp-btn" onclick="requestQRDirectly()">💬 Request Payment QR on WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const MAIN_PHONE = "923093083386"; // Aapka WhatsApp number
+
+    // Page Load check persistent session
+    window.onload = function() {
+      if (localStorage.getItem("queen_agency_logged_in") === "true") {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('dashboardPage').classList.add('dashboard-active');
+      }
+    };
+
+    // Random Login Handle with Exit and Entry Animation
+    function handleLogin() {
+      const email = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if (email === "" || pass === "") {
+        alert("Please enter any random Email and Password to login!");
+        return;
+      }
+
+      // Save login state in local storage (persistent session)
+      localStorage.setItem("queen_agency_logged_in", "true");
+
+      const loginPage = document.getElementById('loginPage');
+      const dashboardPage = document.getElementById('dashboardPage');
+
+      // Play exit animation for login page
+      loginPage.classList.add('exit-animation');
+
+      setTimeout(() => {
+        loginPage.style.display = 'none';
+        loginPage.classList.remove('exit-animation');
+        
+        // Show dashboard page with entry animation
+        dashboardPage.classList.add('dashboard-active');
+      }, 500); 
+    }
+
+    // Manual Logout
+    function handleLogout() {
+      localStorage.removeItem("queen_agency_logged_in");
+      document.getElementById('dashboardPage').classList.remove('dashboard-active');
+      document.getElementById('loginPage').style.display = 'flex';
+      document.getElementById('username').value = "";
+      document.getElementById('password').value = "";
+    }
+
+    // Live Price Calculator
+    function calculatePrice(serviceId, baseRate, baseQty) {
+      const qtyInput = document.getElementById(`${serviceId}_qty`);
+      const priceSpan = document.getElementById(`${serviceId}_price`);
+      let qty = parseInt(qtyInput.value);
+      if (isNaN(qty) || qty < 0) { priceSpan.textContent = "0"; return; }
+      let totalPrice = Math.round((qty * baseRate) / baseQty);
+      priceSpan.textContent = totalPrice.toLocaleString();
+    }
+
+    // Direct WhatsApp Process for Products
+    function processOrder(serviceName, qtyFieldId, priceFieldOrValue, isCalculated) {
+      let finalQty = "1 Item / Package";
+      let finalPrice = priceFieldOrValue;
+
+      if (isCalculated) {
+        finalQty = document.getElementById(qtyFieldId).value || "0";
+        finalPrice = document.getElementById(priceFieldOrValue).textContent || "0";
+      }
+      
+      const textMessage = `Hello QUEEN AGENCY! 👋\n\nI want to buy this service from your panel:\n━━━━━━━━━━━━━━━\n🛒 Service: ${serviceName}\n📊 Quantity: ${finalQty}\n💰 Total Amount: Rs. ${finalPrice}\n━━━━━━━━━━━━━━━\n\n💬 *PAYMENT REQUEST:*\nKindly share your *JazzCash Business Payment QR Code* here so I can transfer the exact amount (Rs. ${finalPrice}) and share the screenshot. Thanks!`;
+      
+      const encodedMessage = encodeURIComponent(textMessage);
+      window.open(`https://wa.me/${MAIN_PHONE}?text=${encodedMessage}`, '_blank');
+    }
+
+    // Direct QR Code Request from Payment Tab
+    function requestQRDirectly() {
+      const textMessage = `Hello QUEEN AGENCY! 👋\n\nI am on the Payment Method tab of your web panel. Please send me your active *JazzCash Business Payment QR Code* so I can transfer my order payment. Thank you!`;
+      const encodedMessage = encodeURIComponent(textMessage);
+      window.open(`https://wa.me/${MAIN_PHONE}?text=${encodedMessage}`, '_blank');
+    }
+
+    function switchTab(event, panelId) {
+      document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active-panel'));
+      event.currentTarget.classList.add('active');
+      document.getElementById(panelId).classList.add('active-panel');
+    }
+
+    function filterSmmPanel(triggerType, targetApp = 'all', element = null) {
+      const dropdown = document.getElementById('appSelect');
+      const buttons = document.querySelectorAll('.app-chip-btn');
+      let finalTarget = targetApp;
+
+      if (triggerType === 'dropdown') {
+        finalTarget = dropdown.value;
+        buttons.forEach(btn => {
+          if(btn.textContent.toLowerCase().includes(finalTarget)) { btn.classList.add('chip-active'); } 
+          else if (finalTarget === 'all' && btn.textContent === 'All Apps') { btn.classList.add('chip-active'); } 
+          else { btn.classList.remove('chip-active'); }
+        });
+      } else if (triggerType === 'button') {
+        dropdown.value = finalTarget;
+        buttons.forEach(btn => btn.classList.remove('chip-active'));
+        element.classList.add('chip-active');
+      }
+
+      document.querySelectorAll('#smmGrid .item-card').forEach(card => {
+        if (finalTarget === 'all' || card.getAttribute('data-app') === finalTarget) { card.style.display = 'block'; } 
+        else { card.style.display = 'none'; }
+      });
+    }
+  </script>
+</body>
+</html>
