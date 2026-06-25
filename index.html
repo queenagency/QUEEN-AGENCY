@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QUEEN AGENCY - Royal & Digital Store</title>
+  <title>QUEEN AGENCY - Royal  & Digital Store</title>
   <style>
     :root {
       --queen-gold: #ffe259;
@@ -46,7 +46,7 @@
 
     @keyframes dashboardEntrance {
       0% { opacity: 0; transform: translateY(40px); filter: blur(6px); }
-      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) filter: blur(0); }
     }
 
     @keyframes fadeOutPage {
@@ -500,6 +500,7 @@
 </head>
 <body>
 
+  <!-- ================= PAGE 1: LOGIN AREA ================= -->
   <div class="page-login" id="loginPage">
     <div class="login-card">
       <div class="queen-crown-icon">👑</div>
@@ -516,6 +517,7 @@
   </div>
 
 
+  <!-- ================= PAGE 2: DASHBOARD AREA ================= -->
   <div class="page-dashboard" id="dashboardPage">
     
     <div class="dash-header">
@@ -523,39 +525,88 @@
       <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </div>
 
+    <!-- MAIN INTERFACE TOP TABS -->
     <div class="nav-tabs">
-      <div class="tab-btn active" onclick="switchTab(event, 'smm-services')">🚀 All Services</div>
-      <div class="tab-btn" onclick="switchTab(event, 'accounts')">🌍 UK & Global ACCOUNTS</div>
+      <div class="tab-btn active" onclick="switchTab(event, 'smm-services')">🚀 SMM Services</div>
+      <div class="tab-btn" onclick="switchTab(event, 'packages')">🛍️ Packages Store</div>
+      <div class="tab-btn" onclick="switchTab(event, 'accounts')">🌍 UK & Global A/C</div>
       <div class="tab-btn" onclick="switchTab(event, 'payment-panel')" style="border-color: var(--queen-gold);">💳 Get Payment Method</div>
     </div>
 
 
+    <!-- ================= CONTENT PANELS ================= -->
+
+    <!-- 1. SMM SERVICES PANEL -->
     <div id="smm-services" class="content-panel active-panel">
-      <div class="panel-title">⚡ SMM Instant Services (Followers, Likes, Views, Subs)</div>
+      <div class="panel-title">⚡Instant Services & Premium Tools</div>
       
       <div class="smm-filter-container">
         <div class="filter-row">
           <label>Choose Option:</label>
           <select id="appSelect" class="app-dropdown" onchange="filterSmmPanel('dropdown')">
-            <option value="all">🌐 All Platforms (Everything)</option>
-            <option value="instagram">📸 Instagram</option>
+            <option value="all">🌐 All Platforms / Apps</option>
             <option value="tiktok">🎵 TikTok</option>
-            <option value="facebook">📘 Facebook</option>
+            <option value="instagram">📸 Instagram</option>
             <option value="youtube">📺 YouTube</option>
+            <option value="facebook">📘 Facebook</option>
+            <option value="capcut">🎬 CapCut Premium</option>
+            <option value="remini">✨ Remini Pro</option>
+            <option value="picsart">🎨 PicsArt Pro</option>
           </select>
         </div>
         
         <div class="app-buttons-group">
           <button class="app-chip-btn chip-active" onclick="filterSmmPanel('button', 'all', this)">All Apps</button>
-          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'instagram', this)">Instagram</button>
           <button class="app-chip-btn" onclick="filterSmmPanel('button', 'tiktok', this)">TikTok</button>
-          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'facebook', this)">Facebook</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'instagram', this)">Instagram</button>
           <button class="app-chip-btn" onclick="filterSmmPanel('button', 'youtube', this)">YouTube</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'facebook', this)">Facebook</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'capcut', this)">CapCut</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'remini', this)">Remini Pro</button>
+          <button class="app-chip-btn" onclick="filterSmmPanel('button', 'picsart', this)">PicsArt Pro</button>
         </div>
       </div>
 
       <div class="services-grid" id="smmGrid">
         
+        <!-- PREMIUM APPS -->
+        <div class="item-card" data-app="capcut">
+          <span class="item-badge" style="background: rgba(255, 167, 81, 0.15)">Premium App</span>
+          <h4>CapCut Premium</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Full unlocked effects, filters & cloud access.</p>
+          <div class="calc-box">
+            <label>Enter Quantity (Accounts/Months):</label>
+            <input type="number" class="calc-input" id="capcut_qty" value="1" min="1" oninput="calculatePrice('capcut', 500, 1)">
+          </div>
+          <div class="price-tag">Rs. <span id="capcut_price" class="calculated-amt">500</span> <span class="rate-info">(Rate: Rs. 500 per unit)</span></div>
+          <button class="order-btn" onclick="processOrder('CapCut Premium Unlocked', 'capcut_qty', 'capcut_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="remini">
+          <span class="item-badge" style="background: rgba(255, 167, 81, 0.15)">Premium App</span>
+          <h4>Remini Pro</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Unlimited ultra AI photo enhancement & restoration.</p>
+          <div class="calc-box">
+            <label>Enter Quantity (Accounts/Months):</label>
+            <input type="number" class="calc-input" id="remini_qty" value="1" min="1" oninput="calculatePrice('remini', 500, 1)">
+          </div>
+          <div class="price-tag">Rs. <span id="remini_price" class="calculated-amt">500</span> <span class="rate-info">(Rate: Rs. 500 per unit)</span></div>
+          <button class="order-btn" onclick="processOrder('Remini Pro AI Unlocked', 'remini_qty', 'remini_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <div class="item-card" data-app="picsart">
+          <span class="item-badge" style="background: rgba(255, 167, 81, 0.15)">Premium App</span>
+          <h4>PicsArt Gold Pro</h4>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Premium stickers, backgrounds, and premium tools unlocked.</p>
+          <div class="calc-box">
+            <label>Enter Quantity (Accounts/Months):</label>
+            <input type="number" class="calc-input" id="picsart_qty" value="1" min="1" oninput="calculatePrice('picsart', 500, 1)">
+          </div>
+          <div class="price-tag">Rs. <span id="picsart_price" class="calculated-amt">500</span> <span class="rate-info">(Rate: Rs. 500 per unit)</span></div>
+          <button class="order-btn" onclick="processOrder('PicsArt Gold Pro Unlocked', 'picsart_qty', 'picsart_price', true)">Order Via WhatsApp</button>
+        </div>
+
+        <!-- TIKTOK -->
         <div class="item-card" data-app="tiktok">
           <span class="item-badge">TikTok</span>
           <h4>TikTok Premium Followers</h4>
@@ -592,6 +643,7 @@
           <button class="order-btn" onclick="processOrder('TikTok Video Views', 'tiktok_views_qty', 'tiktok_views_price', true)">Order Via WhatsApp</button>
         </div>
 
+        <!-- INSTAGRAM -->
         <div class="item-card" data-app="instagram">
           <span class="item-badge">Instagram</span>
           <h4>Instagram Real Followers</h4>
@@ -604,18 +656,7 @@
           <button class="order-btn" onclick="processOrder('Instagram Real Followers', 'ig_followers_qty', 'ig_followers_price', true)">Order Via WhatsApp</button>
         </div>
 
-        <div class="item-card" data-app="instagram">
-          <span class="item-badge">Instagram</span>
-          <h4>Instagram Post Likes</h4>
-          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: ❤️ Likes</p>
-          <div class="calc-box">
-            <label>Enter Quantity:</label>
-            <input type="number" class="calc-input" id="ig_likes_qty" value="10000" min="500" oninput="calculatePrice('ig_likes', 650, 10000)">
-          </div>
-          <div class="price-tag">Rs. <span id="ig_likes_price" class="calculated-amt">650</span> <span class="rate-info">(Rate: Rs. 650 per 10k)</span></div>
-          <button class="order-btn" onclick="processOrder('Instagram Post Likes', 'ig_likes_qty', 'ig_likes_price', true)">Order Via WhatsApp</button>
-        </div>
-
+        <!-- YOUTUBE -->
         <div class="item-card" data-app="youtube">
           <span class="item-badge">YouTube</span>
           <h4>YouTube Subscribers</h4>
@@ -628,25 +669,54 @@
           <button class="order-btn" onclick="processOrder('YouTube Subscribers', 'yt_subs_qty', 'yt_subs_price', true)">Order Via WhatsApp</button>
         </div>
 
-        <div class="item-card" data-app="facebook">
-          <span class="item-badge">Facebook</span>
-          <h4>Facebook Followers</h4>
-          <p style="color: var(--text-muted); margin-bottom: 12px;">Service Type: 👥 Followers</p>
-          <div class="calc-box">
-            <label>Enter Quantity:</label>
-            <input type="number" class="calc-input" id="fb_followers_qty" value="1000" min="100" oninput="calculatePrice('fb_followers', 900, 1000)">
+      </div>
+    </div>
+
+    <!-- 2. PACKAGES PANEL -->
+    <div id="packages" class="content-panel">
+      <div class="panel-title">🛍️ Premium Marketing Packages</div>
+      <div class="services-grid">
+        
+        <!-- FACEBOOK PAGE BOOSTER PACKAGE -->
+        <div class="item-card" style="border: 1px solid #1877f2;">
+          <span class="item-badge" style="background: linear-gradient(135deg, #1877f2 0%, #0a53be 100%); color: #fff;">💎 MEGA FB DEAL</span>
+          <h4>Facebook Page Booster Package</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">Apne Business Page ko banayein 100% Professional aur Trusted!</p>
+          <div class="bonus-box" style="background: rgba(24, 119, 242, 0.08); border-color: #1877f2; color: #7cb5ff;">
+            🚀 <strong>PACKAGE INCLUDES:</strong><br>
+            • 5,000+ Premium Followers (Page Growth)<br>
+            • 10,000+ Post Likes (High Engagement)<br>
+            • 10,000+ Video Views (Social Proof)
           </div>
-          <div class="price-tag">Rs. <span id="fb_followers_price" class="calculated-amt">900</span> <span class="rate-info">(Rate: Rs. 900 per 1k)</span></div>
-          <button class="order-btn" onclick="processOrder('Facebook Followers', 'fb_followers_qty', 'fb_followers_price', true)">Order Via WhatsApp</button>
+          <div class="price-tag">Rs. <span class="calculated-amt">1,400</span></div>
+          <button class="order-btn" style="background: linear-gradient(135deg, #1877f2 0%, #0a53be 100%); color:white; border-color:transparent;" onclick="processOrder('Facebook Page Booster Package Deal', null, '1400', false)">Order FB Booster Deal</button>
+        </div>
+
+        <!-- TIKTOK MINI PACKAGE -->
+        <div class="item-card" style="border: 1px solid var(--queen-gold);">
+          <span class="item-badge" style="background: var(--gold-gradient); color: #0d081b;">🔥 NEW MINI</span>
+          <h4>TikTok Mini Package</h4>
+          <p style="color: var(--text-muted); margin-bottom: 15px;">A perfect starter booster for your TikTok engagement.</p>
+          <div class="bonus-box">
+            💎 <strong>PACKAGE INCLUDES:</strong><br>
+            • 2,000 High Quality Likes<br>
+            • 3,500 Instant Video Views<br>
+            • 200 Organic Comments<br>
+            • 100 Profile Shares
+          </div>
+          <div class="price-tag">Rs. <span class="calculated-amt">1,250</span></div>
+          <button class="order-btn" style="background: var(--gold-gradient); color:#0d081b; border-color:transparent;" onclick="processOrder('TikTok Mini Package Deal', null, '1250', false)">Order Mini Deal</button>
         </div>
 
       </div>
     </div>
 
+    <!-- 3. ACCOUNTS PANEL -->
     <div id="accounts" class="content-panel">
       <div class="panel-title">🌍 UK & Global Accounts Store</div>
       <div class="services-grid">
         
+        <!-- YOUTUBE UK ACCOUNT -->
         <div class="item-card">
           <span class="item-badge">UK Region</span>
           <h4>YOUTUBE UK ACCOUNT</h4>
@@ -658,17 +728,7 @@
           <button class="order-btn" onclick="processOrder('YOUTUBE UK ACCOUNT (with Free Bonuses)', null, '1500', false)">Buy Now</button>
         </div>
 
-        <div class="item-card">
-          <span class="item-badge">USA Region</span>
-          <h4>YOUTUBE USA ACCOUNT</h4>
-          <p style="color: var(--text-muted); margin-bottom: 15px;">Premium USA verified YouTube account, perfect for global monetization reach.</p>
-          <div class="bonus-box">
-            🎁 <strong>FREE BONUSES:</strong> • Free Viral Hashtags Guide & Uploading Chart
-          </div>
-          <div class="price-tag">Rs. <span class="calculated-amt">1,500</span></div>
-          <button class="order-btn" onclick="processOrder('YOUTUBE USA ACCOUNT (with Free Bonuses)', null, '1500', false)">Buy Now</button>
-        </div>
-
+        <!-- TIKTOK UK ACCOUNT -->
         <div class="item-card">
           <span class="item-badge" style="background: rgba(255, 226, 89, 0.15); color: var(--queen-gold);">UK Region</span>
           <h4>TIKTOK UK ACCOUNT</h4>
@@ -680,6 +740,7 @@
           <button class="order-btn" onclick="processOrder('TIKTOK UK ACCOUNT (with Free Bonuses)', null, '900', false)">Buy Now</button>
         </div>
 
+        <!-- TIKTOK GLOBAL ACCOUNT -->
         <div class="item-card">
           <span class="item-badge" style="background: rgba(255, 226, 89, 0.15); color: var(--queen-gold);">Global Region</span>
           <h4>TIKTOK GLOBAL ACCOUNT</h4>
@@ -694,6 +755,7 @@
       </div>
     </div>
 
+    <!-- 4. PAYMENT METHOD PANEL -->
     <div id="payment-panel" class="content-panel">
       <div class="panel-title">💳 Official Payment Gateway</div>
       <div class="payment-container">
@@ -716,8 +778,9 @@
 
   </div>
 
+  <!-- ================= ACTIONS & OPERATIONS SCRIPTS ================= -->
   <script>
-    const MAIN_PHONE = "923093083386"; // Aapka WhatsApp number
+    const MAIN_PHONE = "923093083386"; 
 
     // Page Load check persistent session
     window.onload = function() {
@@ -727,7 +790,7 @@
       }
     };
 
-    // Random Login Handle with Exit and Entry Animation
+    // Random Login
     function handleLogin() {
       const email = document.getElementById('username').value.trim();
       const pass = document.getElementById('password').value.trim();
@@ -737,25 +800,19 @@
         return;
       }
 
-      // Save login state in local storage (persistent session)
       localStorage.setItem("queen_agency_logged_in", "true");
-
       const loginPage = document.getElementById('loginPage');
       const dashboardPage = document.getElementById('dashboardPage');
 
-      // Play exit animation for login page
       loginPage.classList.add('exit-animation');
 
       setTimeout(() => {
         loginPage.style.display = 'none';
         loginPage.classList.remove('exit-animation');
-        
-        // Show dashboard page with entry animation
         dashboardPage.classList.add('dashboard-active');
       }, 500); 
     }
 
-    // Manual Logout
     function handleLogout() {
       localStorage.removeItem("queen_agency_logged_in");
       document.getElementById('dashboardPage').classList.remove('dashboard-active');
@@ -774,7 +831,7 @@
       priceSpan.textContent = totalPrice.toLocaleString();
     }
 
-    // Direct WhatsApp Process for Products
+    // WhatsApp Process
     function processOrder(serviceName, qtyFieldId, priceFieldOrValue, isCalculated) {
       let finalQty = "1 Item / Package";
       let finalPrice = priceFieldOrValue;
@@ -785,12 +842,10 @@
       }
       
       const textMessage = `Hello QUEEN AGENCY! 👋\n\nI want to buy this service from your panel:\n━━━━━━━━━━━━━━━\n🛒 Service: ${serviceName}\n📊 Quantity: ${finalQty}\n💰 Total Amount: Rs. ${finalPrice}\n━━━━━━━━━━━━━━━\n\n💬 *PAYMENT REQUEST:*\nKindly share your *JazzCash Business Payment QR Code* here so I can transfer the exact amount (Rs. ${finalPrice}) and share the screenshot. Thanks!`;
-      
       const encodedMessage = encodeURIComponent(textMessage);
       window.open(`https://wa.me/${MAIN_PHONE}?text=${encodedMessage}`, '_blank');
     }
 
-    // Direct QR Code Request from Payment Tab
     function requestQRDirectly() {
       const textMessage = `Hello QUEEN AGENCY! 👋\n\nI am on the Payment Method tab of your web panel. Please send me your active *JazzCash Business Payment QR Code* so I can transfer my order payment. Thank you!`;
       const encodedMessage = encodeURIComponent(textMessage);
@@ -804,6 +859,7 @@
       document.getElementById(panelId).classList.add('active-panel');
     }
 
+    // SMM Dynamic Filters
     function filterSmmPanel(triggerType, targetApp = 'all', element = null) {
       const dropdown = document.getElementById('appSelect');
       const buttons = document.querySelectorAll('.app-chip-btn');
